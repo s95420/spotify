@@ -19,8 +19,7 @@ public class Viral50Controller {
 
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public List<Viral50> fetchAllViral50()
-    {
+    public List<Viral50> fetchAllViral50() {
         return viral50Service.getAllViral50();
     }
 
@@ -29,21 +28,15 @@ public class Viral50Controller {
     public Page<Viral50> fetchAllViral50ByRegion(@PathVariable String region,
                                                  @RequestParam(required = false) Integer page,
                                                  @RequestParam(required = false) Sort.Direction sortDate,
-                                                 @RequestParam(required = false) Sort.Direction sortRank)
-    {
+                                                 @RequestParam(required = false) Sort.Direction sortRank) {
         int pageNumber = page != null && page > 0 ? page : 1;
-        if(sortDate != null && sortRank != null) {
+        if (sortDate != null && sortRank != null) {
             return viral50Service.getAllViral50ByRegionSortByDateAndRank(region, pageNumber - 1, sortDate, sortRank);
-        }
-        else if(sortDate != null && sortRank == null)
-        {
+        } else if (sortDate != null && sortRank == null) {
             return viral50Service.getAllViral50ByRegionSortByDate(region, pageNumber - 1, sortDate);
-        }
-        else if(sortDate == null && sortRank != null)
-        {
+        } else if (sortDate == null && sortRank != null) {
             return viral50Service.getAllViral50ByRegionSortByRank(region, pageNumber - 1, sortRank);
-        }
-        else
+        } else
             return viral50Service.getAllViral50ByRegion(region, pageNumber - 1);
     }
 }

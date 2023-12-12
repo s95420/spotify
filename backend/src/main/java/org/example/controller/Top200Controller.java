@@ -19,31 +19,24 @@ public class Top200Controller {
 
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public List<Top200> fetchAllTop200()
-    {
+    public List<Top200> fetchAllTop200() {
         return top200Service.getAllTop200();
     }
 
     @GetMapping("/{region}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Page<Top200> fetchAllTop200ByRegion(@PathVariable String region,
-                                                 @RequestParam(required = false) Integer page,
-                                                 @RequestParam(required = false) Sort.Direction sortDate,
-                                                 @RequestParam(required = false) Sort.Direction sortRank)
-    {
+                                               @RequestParam(required = false) Integer page,
+                                               @RequestParam(required = false) Sort.Direction sortDate,
+                                               @RequestParam(required = false) Sort.Direction sortRank) {
         int pageNumber = page != null && page > 0 ? page : 1;
-        if(sortDate != null && sortRank != null) {
+        if (sortDate != null && sortRank != null) {
             return top200Service.getAllTop200ByRegionSortByDateAndRank(region, pageNumber - 1, sortDate, sortRank);
-        }
-        else if(sortDate != null && sortRank == null)
-        {
+        } else if (sortDate != null && sortRank == null) {
             return top200Service.getAllTop200ByRegionSortByDate(region, pageNumber - 1, sortDate);
-        }
-        else if(sortDate == null && sortRank != null)
-        {
+        } else if (sortDate == null && sortRank != null) {
             return top200Service.getAllTop200ByRegionSortByRank(region, pageNumber - 1, sortRank);
-        }
-        else
+        } else
             return top200Service.getAllTop200ByRegion(region, pageNumber - 1);
     }
 }

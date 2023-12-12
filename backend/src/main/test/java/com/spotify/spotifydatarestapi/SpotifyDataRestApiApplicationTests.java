@@ -22,16 +22,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @AutoConfigureMockMvc
 class SpotifyDataRestApiApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
-	@Autowired
+    @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private UserRepository userRepository;
-
 
 
     @Autowired
@@ -65,8 +64,8 @@ class SpotifyDataRestApiApplicationTests {
         loginRequest.setPassword("testPassword");
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/backend/src/main/java/com/bialy/sportifydatarestapi/payload/request/LoginRequest")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(loginRequest)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(loginRequest)))
                 .andReturn();
 
         JwtResponse jwtResponse = new ObjectMapper().readValue(result.getResponse().getContentAsString(), JwtResponse.class);
